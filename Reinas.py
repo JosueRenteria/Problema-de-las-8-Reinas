@@ -28,7 +28,45 @@ def conteo_horizontal(array):
     
     return heuristica
 
-# Funcion que saca la Heuristica de nuestro tablero de forma Diagonal (Empezando por la derecha).
+# Funcion que saca la Heuristica de nuestro tablero de forma Diagonal (Empezando por la izquierda).
+def conteo_diagonal3(array):
+    heuristica = 0
+    lista1 = []
+    lista2 = []
+    for i in range(8):
+        for j in range(8):
+            contador1 = 0
+            contador2 = 0
+
+            # Hace la Busqueda de Derecha a Abajo (Eje. (2,3)-(3,4)). 
+            if array[i,j] == 1 and (lista1.count((i,j)) == 0):
+                x = i
+                y = j
+                while (x < 8 and y < 8):
+                    if array[x,y] == 1:
+                        lista1.append((x,y)) # Agregamos la dupla a una lista (Para no repetir elementos).
+                        contador1 += 1
+                    x = x + 1
+                    y = y + 1
+            
+            # Hace la Busqueda de Abajo a Izquierda (Eje. (2,3)-(1,4)). 
+            if array[i,j] == 1 and (lista2.count((i,j)) == 0):
+                x = i
+                y = j
+                while (x < 8  and y > -1):
+                    if array[x,y] == 1:
+                        lista2.append((x,y)) # Agregamos la dupla a una lista (Para no repetir elementos).
+                        contador2 += 1
+                    x = x + 1
+                    y = y - 1
+
+            # Mandamos a llamar a los contadores y le agregamos su heuristica.
+            heuristica += heuristica_pares(contador1)
+            heuristica += heuristica_pares(contador2)
+    return heuristica
+
+
+# Funcion que saca la Heuristica de nuestro tablero de forma Diagonal (Empezando por la izquierda).
 def conteo_diagonal(array):
     heuristica = 0
     lista = []
@@ -44,6 +82,27 @@ def conteo_diagonal(array):
                         contador += 1
                     x = x + 1
                     y = y + 1
+            # Mandamos a llamar al contador.
+            heuristica += heuristica_pares(contador)
+    print(lista)
+    return heuristica
+
+# Funcion que saca la Heuristica de nuestro tablero de forma Diagonal (Empezando por la derecha).
+def conteo_diagonal2(array):
+    heuristica = 0
+    lista = []
+    for i in range(8):
+        for j in range(8):
+            contador = 0
+            if array[i,j] == 1 and (lista.count((i,j)) == 0):
+                x = i
+                y = j
+                while (x < 8  and y > -1):
+                    if array[x,y] == 1:
+                        lista.append((x,y))
+                        contador += 1
+                    x = x + 1
+                    y = y - 1
             # Mandamos a llamar al contador.
             heuristica += heuristica_pares(contador)
     print(lista)
@@ -70,3 +129,11 @@ print(heuristica_horizontal)
 # Sacar la heuristica (Horizontalmente).
 heuristica_diagonal = conteo_diagonal(tablero_inicial)
 print(heuristica_diagonal)
+
+# Sacar la heuristica (Horizontalmente).
+heuristica_diagona2 = conteo_diagonal2(tablero_inicial)
+print(heuristica_diagona2)
+
+# Sacar la heuristica (Horizontalmente).
+heuristica_diagona3 = conteo_diagonal3(tablero_inicial)
+print(heuristica_diagona3)
