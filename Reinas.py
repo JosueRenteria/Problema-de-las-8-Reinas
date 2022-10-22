@@ -6,16 +6,49 @@
 import random # Esta librería nos ayuda a generar números aleatorios.
 import numpy as np # Esta librería nos ayudara a utilizar arrays (para sacar el promedio).
 
-def heuristica_pares(n):
-    if n == 0:
-        return 0
+# Funcion Recursiva que saca la Heuristica de los pares Hn = (n-1) + Hn-1
+def heuristica_pares(numero):
+    if numero == 0:
+        return 0 # Para el Caso Base.
     else:
-        n = (n-1)+heuristica_pares(int(n-1))
+        return ((numero - 1) + heuristica_pares(numero -1)) #Caso de Estudio.
 
-hola = heuristica_pares(4)
-print(hola)
-# Valores de Heuristica por pares (ej. Euristica de 3 pares (h3) = 6 posibilidades).
-h1, h2, h3, h4, h5, h6, h7 = 0, 2, 6, 10, 15, 21, 28 # Nota: Podria hacerse una funcion recursiva
+# Funcion que saca la Heuristica de nuestro tablero de forma horizontal.
+def conteo_horizontal(array):
+    heuristica = 0
+    for i in range(8):
+        contador = 0
+
+        for j in range(8):
+            if array[i,j] == 1:
+                contador += 1
+
+        # Mandamos a llamar al contador.
+        heuristica += heuristica_pares(contador)
+    
+    return heuristica
+
+# Funcion que saca la Heuristica de nuestro tablero de forma Diagonal (Empezando por la derecha).
+def conteo_diagonal(array):
+    heuristica = 0
+    lista = []
+    for i in range(8):
+        for j in range(8):
+            contador = 0
+            if array[i,j] == 1 and (lista.count((i,j)) == 0):
+                x = i
+                y = j
+                while (x < 8 and y < 8):
+                    if array[x,y] == 1:
+                        lista.append((x,y))
+                        contador += 1
+                    x = x + 1
+                    y = y + 1
+            # Mandamos a llamar al contador.
+            heuristica += heuristica_pares(contador)
+    print(lista)
+    return heuristica
+
 
 # Creacion del Arreglo BiDimencional de 8x8.
 tablero_inicial = np.zeros((8, 8), dtype=np.int64) # Arreglo BiDimencional 8x8.
@@ -26,8 +59,14 @@ for i in range(8):
     movimiento = random.randint(0,7)
     tablero_inicial[movimiento, i] = 1
 
-# Sacar la heuristica (Horizontalmente).
-
 # Observar el Arreglo Final (utilizar para sacar la heuristica)
 print("\n\n")
 print(tablero_inicial)
+
+# Sacar la heuristica (Horizontalmente).
+heuristica_horizontal = conteo_horizontal(tablero_inicial)
+print(heuristica_horizontal)
+
+# Sacar la heuristica (Horizontalmente).
+heuristica_diagonal = conteo_diagonal(tablero_inicial)
+print(heuristica_diagonal)
