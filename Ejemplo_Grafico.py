@@ -1,3 +1,4 @@
+# Importacion de las libreias.
 from tkinter import *
 
 #Create & Configure root 
