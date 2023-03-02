@@ -16,3 +16,8 @@ Desarrollo:
   • Detectar ataques en horizontal y diagonal (izquierda y derecha).
   
   ![image](https://user-images.githubusercontent.com/92546462/222446824-1cb183a0-4681-4b26-a6b5-54916b25ae0c.png)
+
+
+
+PARTE 2 (Generando la menor Heuristica):
+https://github.com/JosueRenteria/Problema-8-Reinas-Funcional
